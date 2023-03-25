@@ -1,0 +1,17 @@
+version: "3"
+services:
+  triton-server:
+    image: nvcr.io/nvidia/tritonserver:23.02-py3
+    volumes:
+      - ${REPO_PATH}/model_repository:/models
+    command: tritonserver --model-repository=/models
+    restart: always
+    network_mode: "host"
+
+  triton-client:
+    image: nvcr.io/nvidia/tritonserver:23.02-py3-sdk
+    volumes:
+      - ${REPO_PATH}/model_repository:/models
+    command: sleep infinity
+    restart: always
+    network_mode: "host"
