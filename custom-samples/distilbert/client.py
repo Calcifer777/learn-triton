@@ -10,13 +10,21 @@ from tritonclient.utils import np_to_triton_dtype
 client = httpclient.InferenceServerClient(url="localhost:8001")
 
 # %%
-text_obj = np.array(["This is a string"], dtype=np.object_)
+text = np.array([["This is a string"]], dtype=np.object_)
 
-input_tensors = [
-  httpclient.InferInput("text", text_obj.shape, "BYTES"),
+input_tensor = httpclient.InferInput("text", text.shape, "BYTES")
+input_tensor.set_data_from_numpy(text)
+output_tensors = [
+  httpclient.InferRequestedOutput(name="input_ids"),
+  httpclient.InferRequestedOutput(name="attention_mask"),
 ]
-input_tensors[0].set_data_from_numpy(np.array(["sad"], dtype=np.object_))
-results = client.infer(model_name="preprocess", inputs=input_tensors)
+results = client.infer(
+  model_name="preprocess", 
+  inputs=[input_tensor],
+  outputs=output_tensors,
+)
+print(f"{results.as_numpy('input_ids')=}")
+print(f"{results.as_numpy('attention_mask')=}")
 
 # %%
 
@@ -26,7 +34,7 @@ input_json = {
       "name": "text",
       "shape": [1,1],
       "datatype": "BYTES",
-      "data": ["This is a string"]
+      "data": [["This is a string"]]
       }
    ]
 }

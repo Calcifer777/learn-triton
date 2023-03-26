@@ -35,6 +35,16 @@ class TritonPythonModel:
     )
 
   def execute(self, requests):
+    """
+    c_python_backend_utils.Tensor
+      as_numpy
+      from_dlpack
+      is_cpu
+      name
+      shape
+      to_dlpack
+      triton_dtype
+    """
     responses = []
     for request in requests:
       inputs_raw = pb_utils.get_input_tensor_by_name(request, "text")
