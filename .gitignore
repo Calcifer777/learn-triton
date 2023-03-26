@@ -1,3 +1,5 @@
 *.onnx
 *.graphdef
 *.pb
+**/tokenizer
+*.pyc

@@ -2,7 +2,6 @@ import numpy as np
 import struct
 import json
 
-
 TRITON_STRING_TO_NUMPY = {
     'TYPE_BOOL': bool,
     'TYPE_UINT8': np.uint8,

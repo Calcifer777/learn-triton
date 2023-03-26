@@ -4,7 +4,9 @@ services:
     image: nvcr.io/nvidia/tritonserver:23.02-py3
     volumes:
       - ${REPO_PATH}:/models
-    command: tritonserver --model-repository=/models
+    command: sleep infinity  
+    # command: tritonserver --model-repository=/models
+    # command: tritonserver --model-repository=/models --model-control-mode=poll --repository-poll-secs=5
     restart: always
     network_mode: "host"
 
