@@ -7,7 +7,7 @@ import numpy as np
 from tritonclient.utils import np_to_triton_dtype
 
 # %%
-client = httpclient.InferenceServerClient(url="localhost:8001")
+client = httpclient.InferenceServerClient(url="localhost:8000")
 
 # %%
 text = np.array([["This is a string"]], dtype="object")

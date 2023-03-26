@@ -1,0 +1,54 @@
+name: "e2e"
+platform: "ensemble"
+max_batch_size: 4
+
+input [
+    {
+        name: "text"
+        data_type: TYPE_STRING
+        dims: [-1 ]
+    }
+]
+output [
+    {
+        name: "502"
+        data_type: TYPE_FP32
+        dims: [-1, 13]
+    }
+]
+ensemble_scheduling {
+    step [
+        {
+            model_name: "preprocess"
+            model_version: 1
+            input_map {
+                key: "text"
+                value: "text"
+            }
+            output_map {
+                key: "input_ids"
+                value: "input_ids"
+            }
+            output_map {
+                key: "attention_mask"
+                value: "attention_mask"
+            }
+        },
+        {
+            model_name: "ner"
+            model_version: 1
+            input_map {
+                key: "input_ids"
+                value: "input_ids"
+            }
+            input_map {
+                key: "slice"
+                value: "attention_mask"
+            }
+            output_map {
+                key: "502"
+                value: "502"
+            }
+        }
+    ]
+}

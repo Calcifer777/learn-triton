@@ -7,7 +7,7 @@ import numpy as np
 from tritonclient.utils import np_to_triton_dtype
 
 # %%
-client = httpclient.InferenceServerClient(url="localhost:8001")
+client = httpclient.InferenceServerClient(url="localhost:8000")
 
 # %%
 input_ids = np.array([[101, 2023, 2003, 1037, 5164, 102]])
@@ -26,7 +26,7 @@ output_tensors = [ httpclient.InferRequestedOutput(name="502"), ]
 results = client.infer(
   model_name="ner", 
   inputs=input_tensors,
-  # outputs=output_tensors,
+  outputs=output_tensors,
 )
 print(f"{results.as_numpy('502')=}")
 print(f"{results.as_numpy('502').shape=}")
